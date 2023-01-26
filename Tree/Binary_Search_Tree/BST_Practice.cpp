@@ -16,6 +16,17 @@ public:
     }
 };
 
+void takeInput(node *&root)
+{
+    int data;
+    cin >> data;
+    while (data != -1)
+    {
+        root = buildBST(root, data);
+        cin >> data;
+    }
+}
+
 node *buildBST(node *&root, int data)
 {
     if (!root)
@@ -29,6 +40,7 @@ node *buildBST(node *&root, int data)
         root->right = buildBST(root->right, data);
     return root;
 }
+
 void inorder(node *root)
 {
     if (root == NULL)
@@ -158,14 +170,30 @@ node *maxVal(node *root)
     return root;
 }
 
-void takeInput(node *&root)
+void levelOrderInsert(node *&root, int data)
 {
-    int data;
-    cin >> data;
-    while (data != -1)
+    queue<node *> q;
+    node *temp;
+    node *newNode = new node(data);
+    q.push(root);
+    while (!q.empty())
     {
-        root = buildBST(root, data);
-        cin >> data;
+        temp = q.front();
+        q.pop();
+        if (temp->left)
+            q.push(temp->left);
+        else
+        {
+            temp->left = newNode;
+            return;
+        }
+        if (temp->right)
+            q.push(temp->right);
+        else
+        {
+            temp->right = newNode;
+            return;
+        }
     }
 }
 

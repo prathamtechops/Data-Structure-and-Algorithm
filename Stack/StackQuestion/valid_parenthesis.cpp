@@ -2,44 +2,37 @@
 #include <stack>
 using namespace std;
 
-bool isValid(string str)
+bool isValid(string s)
 {
-    stack<char> c;
-    for (int i = 0; i < str.length(); i++)
+    stack<char> st;
+    for (int i = 0; i < s.length(); i++)
     {
-        char ch = str[i];
-
-        // if opening bracket...
-        if (ch == '(' || ch == '{' || ch == '[')
-            c.push(ch);
-
-        // If closing bracket...
+        char ch = s[i];
+        if (st.empty())
+        {
+            st.push(ch);
+        }
+        else if (st.top() == '(' && ch == ')' || st.top() == '[' && ch == ']' || st.top() == '{' && ch == '}')
+        {
+            st.pop();
+        }
         else
         {
-            if (!c.empty())
-            {
-                char top = c.top();
-                if ((top == '{' && ch == '}') ||
-                    (top == '(' && ch == ')') ||
-                    (top == '[' && ch == ']'))
-                    c.pop();
-                else
-                    return false;
-            }
-            else
-                return false;
+            st.push(ch);
         }
     }
-    return true;
+    if (st.empty())
+    {
+        return true;
+    }
+    return false;
 }
-
 int main(int argc, char const *argv[])
 {
 
     string str = "[(])";
 
-    cout
-        << isValid(str);
+    cout << isValid(str);
 
     return 0;
 }

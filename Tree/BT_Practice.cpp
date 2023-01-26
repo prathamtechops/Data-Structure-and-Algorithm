@@ -147,6 +147,89 @@ void buildFromLevelOrder(node *&root)
     }
 }
 
+bool search(node *root, int data)
+{
+    node *temp;
+    if (!root)
+        return false;
+    queue<node *> q;
+    q.push(root);
+    while (!q.empty())
+    {
+        temp = q.front();
+        q.pop();
+        if (temp->data == data)
+            return true;
+        if (temp->left)
+            q.push(temp->left);
+        if (temp->right)
+            q.push(temp->right);
+    }
+}
+void levelOrderInsert(node *&root, int data)
+{
+    queue<node *> q;
+    node *temp;
+    node *newNode = new node(data);
+    q.push(root);
+    while (!q.empty())
+    {
+        temp = q.front();
+        q.pop();
+        if (temp->left)
+            q.push(temp->left);
+        else
+        {
+            temp->left = newNode;
+            return;
+        }
+        if (temp->right)
+            q.push(temp->right);
+        else
+        {
+            temp->right = newNode;
+            return;
+        }
+    }
+}
+
+int maxLevelSum(node *root)
+{
+    node *temp;
+    queue<node *> q;
+    int maxLevel = 0;
+    int level = 0;
+    int currentSum = 0;
+    int maxSum = 0;
+    q.push(root);
+    q.push(NULL);
+    while (!q.empty())
+    {
+        temp = q.front();
+        q.pop();
+        if (temp == NULL)
+        {
+            if (currentSum > maxSum)
+            {
+                maxSum = currentSum;
+                maxLevel = level;
+            }
+            if (!q.empty())
+                q.push(NULL);
+            level++;
+        }
+        else
+        {
+            currentSum += temp->data;
+            if (temp->left)
+                q.push(temp->left);
+            if (temp->right)
+                q.push(temp->right);
+        }
+    }
+    return maxLevel;
+}
+
 int main(int argc, char const *argv[])
 {
     node *root = NULL;
@@ -154,8 +237,10 @@ int main(int argc, char const *argv[])
 
     // 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
 
+    levelOrderInsert(root, 90);
     leverOrderTraversal(root);
-    zigZag(root);
+    // cout << search(root, 5);
+    // zigZag(root);
 
     return 0;
 }
