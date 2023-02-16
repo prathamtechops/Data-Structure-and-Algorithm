@@ -30,6 +30,15 @@ node *insertInBST(node *root, int data)
     else
         root->right = insertInBST(root->right, data);
 }
+node *LCA(node *root, node *a, node *b)
+{
+    if (root->data > a->data && root->data > b->data)
+        return LCA(root->left, a, b);
+    else if (root->data < a->data && root->data < b->data)
+        return LCA(root->right, a, b);
+    else
+        return root;
+}
 void inOrder(node *root)
 {
     if (root == NULL)

@@ -1,8 +1,7 @@
 #include <iostream>
-using namespace std;
 #include <unordered_map>
 #include <list>
-
+using namespace std;
 template <typename T>
 
 class Graph
@@ -31,16 +30,27 @@ public:
             cout << endl;
         }
     }
-
-    
 };
+
+void DFSTraversal(Graph<int> *g, int m)
+{
+    int visited[m] = {0};
+    for (int i = 0; i < m; i++)
+    {
+        if (!visited[i])
+            DFS(g, i, m, visited);
+    }
+}
+
+void DFS(Graph<int> *g, int i, int m, int visited)
+{
+}
 
 int main(int argc, char const *argv[])
 {
 
     int n = 5;
     int m = 6;
-
     Graph<int> g;
     for (int i = 0; i < m; i++)
     {
@@ -48,7 +58,6 @@ int main(int argc, char const *argv[])
         cin >> u >> v;
         g.addEdge(u, v, 0);
     }
-
     g.printAdjList();
 
     return 0;

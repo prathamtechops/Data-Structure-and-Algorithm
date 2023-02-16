@@ -170,32 +170,7 @@ node *maxVal(node *root)
     return root;
 }
 
-void levelOrderInsert(node *&root, int data)
-{
-    queue<node *> q;
-    node *temp;
-    node *newNode = new node(data);
-    q.push(root);
-    while (!q.empty())
-    {
-        temp = q.front();
-        q.pop();
-        if (temp->left)
-            q.push(temp->left);
-        else
-        {
-            temp->left = newNode;
-            return;
-        }
-        if (temp->right)
-            q.push(temp->right);
-        else
-        {
-            temp->right = newNode;
-            return;
-        }
-    }
-}
+
 
 int main(int argc, char const *argv[])
 {
